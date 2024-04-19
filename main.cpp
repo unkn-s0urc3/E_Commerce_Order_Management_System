@@ -71,7 +71,7 @@ public:
     DiscountedOrder(int num, const Client& c, const vector<Product*>& p, double discount)
             : Order(num, c, p), discountPercentage(discount) {}
 
-    double getTotalPrice() const override {
+    double getTotalPrice() const  {
         double total = Order::getTotalPrice();
         return total - (total * (discountPercentage / 100.0));
     }
