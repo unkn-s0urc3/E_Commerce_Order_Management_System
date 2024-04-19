@@ -44,7 +44,7 @@ private:
 public:
     Order(int num, const Client& c, const vector<Product*>& p) : orderNumber(num), client(c), products(p) {}
 
-    double getTotalPrice() const {
+    virtual double getTotalPrice() const {
         double total = 0.0;
         for (const auto& product : products) {
             total += product->getTotalPrice();
@@ -52,7 +52,7 @@ public:
         return total;
     }
 
-    void display() const {
+    virtual void display() const {
         cout << "Order Number: " << orderNumber << endl;
         client.display();
         cout << "Products:" << endl;
@@ -71,9 +71,14 @@ public:
     DiscountedOrder(int num, const Client& c, const vector<Product*>& p, double discount)
             : Order(num, c, p), discountPercentage(discount) {}
 
-    double getTotalPrice() const  {
+    double getTotalPrice() const override {
         double total = Order::getTotalPrice();
         return total - (total * (discountPercentage / 100.0));
+    }
+
+    void display() const override {
+        Order::display();
+        cout << "Discount: " << discountPercentage << "%" << endl;
     }
 };
 
